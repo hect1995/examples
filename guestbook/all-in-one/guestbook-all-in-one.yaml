@@ -109,7 +109,7 @@ spec:
   # an external load-balanced IP for the frontend service.
   # type: LoadBalancer
   ports:
-  - port: 82
+  - port: 80
   selector:
     app: guestbook
     tier: frontend
@@ -132,6 +132,9 @@ spec:
     spec:
       containers:
       - name: php-redis
+        network_mode: host
+        privileged: true
+        user: root
         image: gcr.io/google-samples/gb-frontend:v4
         resources:
           requests:
@@ -146,4 +149,4 @@ spec:
           # line below:
           # value: env
         ports:
-        - containerPort: 82
+        - containerPort: 80
